@@ -46,9 +46,10 @@ Shader "Unlit/Lesson_02"
             interpolators vert(meshdata v)
             {
                 interpolators output;
-                output.vertex = UnityObjectToClipPos(v.vertex);
-                output.normal = v.normal;
                 // multiplying by the MVP (Model-View-Projection) matrix. From local space -> to global space -> to camera space -> to clip space
+                output.vertex = UnityObjectToClipPos(v.vertex);
+                // usually you have more pixels than you have vertices. There are fewer vertices. so you would prolly rather wanna do things in vertex shader if it is possible.
+                output.normal = UnityObjectToWorldNormal(v.normal);
                 return output;
             }
 
