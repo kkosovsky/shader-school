@@ -40,7 +40,7 @@ Shader "Unlit/Lesson_02"
             {
                 float4 vertex : SV_POSITION;
                 float3 normal : TEXCOORD0;
-                // float2 uv0 : TEXCOORD0;
+                float2 uv0 : TEXCOORD1;
             };
 
             interpolators vert(meshdata v)
@@ -50,13 +50,14 @@ Shader "Unlit/Lesson_02"
                 output.vertex = UnityObjectToClipPos(v.vertex);
                 // usually you have more pixels than you have vertices. There are fewer vertices. so you would prolly rather wanna do things in vertex shader if it is possible.
                 output.normal = UnityObjectToWorldNormal(v.normal);
+                output.uv0 = v.uv0; // just a passthrough;
                 return output;
             }
 
             // SV_Target => telling us this should output to the frame buffer
             fixed4 frag(interpolators input) : SV_Target
             {
-                return float4(input.normal, 1);
+                return float4(input.uv0, 0, 1);
             }
 
             void swizzlingExample()
